@@ -8,7 +8,8 @@
 void main()
 {
 	int isAuth = 0; // 1 if the user is authenticated, 0 otherwise
-
+    // Runner
+    /*
     // Welcome message
     printf("********** Rugby Performance Metric **********\n");
     printf("Please enter your credentials to log in\n");
@@ -23,4 +24,6 @@ void main()
         printf("Invalid username or password.\n");
         exit(0);
     }
+    */
+    processMenu(); // Display the menu
 }
