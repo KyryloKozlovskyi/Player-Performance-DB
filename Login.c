@@ -1,3 +1,4 @@
+#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,11 +12,10 @@ int processLogin() {
     int flag = 0;                  // 1 if the user is authenticated, 0 otherwise
     FILE* fp;                      // File pointer
     loginDetails* headPtr = NULL;  // Head pointer of the linked list
-    // loginDetails* temp; // Debugging purposes
     fp = fopen("Login.txt", "r");
     if (NULL == fp) {
         printf("File can't be opened!\n");
-        return;
+        return 0;
     }
     else {
         while (!feof(fp)) {
@@ -24,15 +24,6 @@ int processLogin() {
     }
     fclose(fp);  // Close the file
 
-    // Debugging purposes
-    /*
-    temp = headPtr;
-    while (temp != NULL)
-    {
-        printf("Username: %s\nPassword: %s\n\n", temp->username, temp->password);
-        temp = temp->next;
-    }
-    */
     flag = getUserCredentials(headPtr);  // Store the return value
     free(headPtr);  // Free the memory allocated for the linked list
 
@@ -56,8 +47,7 @@ void addElementAtStart(loginDetails** top, FILE* fp) {
 int compareCredentials(char username[99], char password[7], loginDetails* top) {
     int flag = 0;  // 1 if the user is authenticated, 0 otherwise
     loginDetails* temp = top;
-    // printf("Username: %s\nPassword: %s\n", username, password); // Debugging
-    // purposes
+
     while (temp != NULL) {
         if (strcmp(temp->username, username) == 0 &&
             strcmp(temp->password, password) == 0) {
@@ -71,32 +61,37 @@ int compareCredentials(char username[99], char password[7], loginDetails* top) {
 
 // Get the user's input
 int getUserCredentials(loginDetails* top) {
-    int flag = 0;       // 1 if the user is authenticated, 0 otherwise
-    char username[99];  // 98 characters for the username and 1 for the null
-    // terminator
-    char password[7];  // 6 characters for the password and 1 for the null
-    // terminator
+    int flag = 0;  // 1 if the user is authenticated, 0 otherwise
+    char username[99];
+    char password[7];
+    char ch;    // Character read from the console
+    int i = 0;  // Index for password buffer
 
-    printf("Enter your username: ");
+    // Get the username from the user
+    printf("Username: ");
     fgets(username, sizeof(username), stdin);
     // Remove the trailing newline character
     username[strcspn(username, "\n")] = '\0';
 
-    printf("Enter your password: ");
-    fgets(password, sizeof(password), stdin);
-    // Remove the trailing newline character
-    password[strcspn(password, "\n")] = '\0';
+    // Get the password from the user and mask it with *
+    printf("Password: ");
+    while ((ch = getch()) != '\r' && ch != '\n') {
+        if (ch == '\b') {
+            if (i > 0) {
+                password[--i] =
+                    '\0';         // Remove the last character from the password buffer
+                printf("\b \b");  // Erase the last character from the console
+            }
+        }
+        else if (isprint(ch) && i < 6) {
+            password[i++] = ch;  // Add the character to the password buffer
+            printf("*");         // Print * to the console
+        }
+    }
+    password[i] = '\0'; // Null to end the string (buffer)
+    printf("\n");
 
     flag = compareCredentials(username, password, top);  // Store the return value
 
-    // Debugging purposes
-    /*
-    if (isAuthenticated == 1) {
-        printf("Login successful!\n");
-    }
-    else {
-        printf("Invalid username or password.\n");
-    }
-    */
     return flag;
 }
