@@ -18,5 +18,33 @@
     <ClCompile Include="Main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Login.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Login.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Rugby.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
