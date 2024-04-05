@@ -15,7 +15,7 @@ int processLogin() {
     fp = fopen("Login.txt", "r");
     if (NULL == fp) {
         printf("File can't be opened!\n");
-        return 0;
+        return;
     }
     else {
         while (!feof(fp)) {

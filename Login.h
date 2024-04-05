@@ -6,7 +6,7 @@
 // Structure to represent login credentials
 typedef struct loginDetails {
 	char username[99];
-	char password[6];
+	char password[7];
 	struct loginDetails* next;
 } loginDetails;
 
