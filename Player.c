@@ -9,7 +9,6 @@
 playerDetails* headPtr = NULL;
 void readPlayerFile() {
     FILE* fp;  // File pointer
-    playerDetails* headPtr = NULL;
 
     fp = fopen("Rugby.txt", "r");
     if (fp == NULL) {
@@ -18,53 +17,55 @@ void readPlayerFile() {
     }
     else {
         while (!feof(fp)) {
-            addElementAtStartP(&headPtr, fp);
-            /*
+            playerDetails temp;
+            fscanf(fp, "%d %s %s %d %f %f %s %s %d %d %d", &temp.irfuNumber,
+                temp.firstName, temp.secondName, &temp.age, &temp.height,
+                &temp.weight, temp.club, temp.email, &temp.playerPosition,
+                &temp.missedTackles, &temp.playerMetres);
+            // addElementAtStartP(&headPtr, temp);
+
             if (headPtr == NULL) {
-                addElementAtStartP(&headPtr, fp);
+                addElementAtStartP(&headPtr, temp);
             }
             else {
-                addElementAtEndP(headPtr, fp);
+                addElementAtEndP(headPtr, temp);
             }
-            */
         }
     }
     fclose(fp);  // Close the file
 
-    printPlayerDetails(headPtr); 
+    printPlayerDetails(headPtr);
+    addPlayer(headPtr);
+    printf("***************************************");
+    printPlayerDetails(headPtr);
 }
 
-void addElementAtStartP(playerDetails** top, FILE* fp) {
+void addElementAtStartP(playerDetails** top, playerDetails details) {
     playerDetails* temp;
 
     temp = (playerDetails*)malloc(sizeof(playerDetails));
-    fscanf(fp, "%d %s %s %d %f %f %s %s %d %d %d", &temp->irfuNumber,
-        temp->firstName, temp->secondName, &temp->age, &temp->height,
-        &temp->weight, temp->club, temp->email, &temp->playerPosition,
-        &temp->missedTackles, &temp->playerMetres);
+
+    temp = &details;
 
     temp->next = *top;
     *top = temp;
 }
 
-void addElementAtEndP(playerDetails* top, FILE* fp) {
-    playerDetails* newNode;
-    playerDetails* temp;
-    newNode = (playerDetails*)malloc(sizeof(playerDetails));
-    temp = top;
+void addElementAtEndP(playerDetails* top, playerDetails details) {
+    playerDetails* newNode = (playerDetails*)malloc(sizeof(playerDetails));
+    playerDetails* temp = top;
 
-    fscanf(fp, "%d %s %s %d %f %f %s %s %d %d %d", &temp->irfuNumber,
-        temp->firstName, temp->secondName, &temp->age, &temp->height,
-        &temp->weight, temp->club, temp->email, &temp->playerPosition,
-        &temp->missedTackles, &temp->playerMetres);
+    *newNode = details;
 
+    newNode->next =
+        NULL;  // Make sure the new node points to NULL as it's the last node
 
+    // Traverse the list to find the last node
     while (temp->next != NULL) {
         temp = temp->next;
     }
-
+    // Connect the last node to the new node
     temp->next = newNode;
-    newNode->next = NULL;
 }
 
 // Print all player details in the linked list
@@ -88,4 +89,33 @@ void printPlayerDetails(playerDetails* top) {
 
         temp = temp->next;  // Move to the next node
     }
+}
+
+void addPlayer(playerDetails* top) {
+	playerDetails temp;
+
+	printf("Enter IRFU Number: ");
+	scanf("%d", &temp.irfuNumber);
+	printf("Enter First Name: ");
+	scanf("%s", temp.firstName);
+	printf("Enter Second Name: ");
+	scanf("%s", temp.secondName);
+	printf("Enter Age: ");
+	scanf("%d", &temp.age);
+	printf("Enter Height: ");
+	scanf("%f", &temp.height);
+	printf("Enter Weight: ");
+	scanf("%f", &temp.weight);
+	printf("Enter Club: ");
+	scanf("%s", temp.club);
+	printf("Enter Email: ");
+	scanf("%s", temp.email);
+	printf("Enter Player Position: ");
+	scanf("%d", &temp.playerPosition);
+	printf("Enter Missed Tackles: ");
+	scanf("%d", &temp.missedTackles);
+	printf("Enter Player Metres: ");
+	scanf("%d", &temp.playerMetres);
+
+	addElementAtEndP(top, temp);
 }

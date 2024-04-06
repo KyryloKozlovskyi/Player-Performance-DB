@@ -21,10 +21,10 @@ typedef struct playerDetails {
 
 
 void readPlayerFile();
-void addElementAtStartP(playerDetails** top, FILE* fp);
-void addElementAtEndP(playerDetails* top, FILE* fp);
+void addElementAtStartP(playerDetails** top, playerDetails details);
+void addElementAtEndP(playerDetails* top, playerDetails details);
 void printPlayerDetails(playerDetails* top);
-
+void addPlayer(playerDetails* top);
 /*
 void addPlayer(playerDetails* top);
 void displayAll(playerDetails* top);
