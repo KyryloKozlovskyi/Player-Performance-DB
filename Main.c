@@ -7,15 +7,16 @@
 
 void main() {
     int isAuth = 0;  // 1 if the user is authenticated, 0 otherwise
-    // Runner
-    /*
+    playerDetails* headPtr = NULL;  // Pointer to the head of the linked list
+
     // Welcome message
+    /*
     printf("********** Rugby Performance Metric **********\n");
     printf("Please enter your credentials to log in\n");
 
-        isAuth = processLogin(); // Authenticate the user
+    isAuth = processLogin(); // Authenticate the user
 
-        // Debugging purposes
+    // Debugging purposes
     if (isAuth == 1) {
         printf("Login successful!\n");
     }
@@ -24,8 +25,9 @@ void main() {
         exit(0);
     }
     */
-    //processMenu();  // Display the menu
-    readPlayerFile();
 
+    readPlayerFile(&headPtr);
+    processMenu(headPtr);  // Display the menu
 
+    return 0;
 }

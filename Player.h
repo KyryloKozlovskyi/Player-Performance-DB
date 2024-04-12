@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+
 // Structure to represent player details
 typedef struct playerDetails {
 	int irfuNumber;  // Must be unique
@@ -19,18 +20,21 @@ typedef struct playerDetails {
 	struct playerDetails* next;
 } playerDetails;
 
-
-void readPlayerFile();
+void readPlayerFile(playerDetails** top);
 void addElementAtStartP(playerDetails** top, playerDetails details);
 void addElementAtEndP(playerDetails* top, playerDetails details);
-void printPlayerDetails(playerDetails* top);
-void addPlayer(playerDetails* top);
-/*
-void addPlayer(playerDetails* top);
-void displayAll(playerDetails* top);
+void displayAllPlayers(playerDetails* top);
+void addPlayer(playerDetails** top);
 void displayPlayer(playerDetails* top);
+playerDetails* searchByName(playerDetails* top);
+playerDetails* searchByIRFU(playerDetails* top);
+int isIRFUnumberUnique(playerDetails* top, int irfuNumber);
 void updatePlayer(playerDetails* top);
-void deletePlayer(playerDetails* top);
+void deletePlayer(playerDetails** top);
+int isValidEmail(char email[99]);
+
+/*
+
 void generateStatistics(playerDetails* top);
 void writeReport(playerDetails* top);
 void listPlayersCategory(playerDetails* top);

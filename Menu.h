@@ -3,7 +3,9 @@
 
 #include <stdio.h>
 
+#include "Player.h"
+
 // Function declarations
 void displayMenu();
-void processMenu();
+void processMenu(playerDetails* top);
 #endif  // MENU_H
