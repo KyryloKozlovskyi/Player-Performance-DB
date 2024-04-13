@@ -32,10 +32,9 @@ int isIRFUnumberUnique(playerDetails* top, int irfuNumber);
 void updatePlayer(playerDetails* top);
 void deletePlayer(playerDetails** top);
 int isValidEmail(char email[99]);
+void generateStatistics(playerDetails* top);
 
 /*
-
-void generateStatistics(playerDetails* top);
 void writeReport(playerDetails* top);
 void listPlayersCategory(playerDetails* top);
 */

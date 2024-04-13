@@ -41,9 +41,7 @@ void processMenu(playerDetails* top) {
             deletePlayer(&top);
             break;
         case 6:
-           printf(
-				"Generate statistics based on a range of player weights function "
-				"to be implemented\n");
+            generateStatistics(top);
             break;
         case 7:
             printf(
@@ -54,11 +52,16 @@ void processMenu(playerDetails* top) {
             printf(
                 "List all players in order of height function to be implemented\n");
             break;
-        case 9:
+        case -1:
+            system("cls");
             printf("Exiting...\n");
+            Sleep(500);
             break;
         default:
+            system("cls");
             printf("Invalid choice. Please try again.\n");
+            Sleep(500);
+            system("cls");
         }
     } while (choice != -1);
 }

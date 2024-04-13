@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<windows.h>
 
 #include "Login.h"
 #include "Menu.h"
@@ -10,7 +11,7 @@ void main() {
     playerDetails* headPtr = NULL;  // Pointer to the head of the linked list
 
     // Welcome message
-    /*
+   
     printf("********** Rugby Performance Metric **********\n");
     printf("Please enter your credentials to log in\n");
 
@@ -18,13 +19,17 @@ void main() {
 
     // Debugging purposes
     if (isAuth == 1) {
+        system("cls");
         printf("Login successful!\n");
+        Sleep(500);
     }
     else {
+        system("cls");
         printf("Invalid username or password.\n");
+        Sleep(500);
         exit(0);
     }
-    */
+  
 
     readPlayerFile(&headPtr);
     processMenu(headPtr);  // Display the menu
