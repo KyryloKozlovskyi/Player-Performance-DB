@@ -1,8 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<windows.h>
+#include <windows.h>
 
 #include "Player.h"
 
@@ -99,6 +101,7 @@ playerDetails* searchByName(playerDetails* top) {
     while (temp != NULL) {
         if (strcmp(firstName, temp->firstName) == 0 &&
             strcmp(secondName, temp->secondName) == 0) {
+            system("cls");
             printf("Player Details:\n");
             printf("IRFU Number: %d\n", temp->irfuNumber);
             printf("First Name: %s\n", temp->firstName);
@@ -143,6 +146,7 @@ playerDetails* searchByIRFU(playerDetails* top) {
     // Iterate over the linked list and search for the player
     while (temp != NULL) {
         if (irfuNumber == temp->irfuNumber) {
+            system("cls");
             printf("Player Details:\n");
             printf("IRFU Number: %d\n", temp->irfuNumber);
             printf("First Name: %s\n", temp->firstName);
@@ -517,11 +521,14 @@ void deletePlayer(playerDetails** top) {
 }
 
 // Function to generate statistics based on a range of player weights
-void generateStatistics(playerDetails* top) {
+void generateStatistics(playerDetails* top, int report) {
+    FILE* file;
     float minWeight, maxWeight;
     int totalPlayers = 0;
-    int noMissedTackles = 0, lessThan3MissedTackles = 0, lessThan5MissedTackles = 0, moreThan5MissedTackles = 0;
-    int noPlayerMetres = 0, lessThan10PlayerMetres = 0, lessThan20PlayerMetres = 0, moreThan20PlayerMetres = 0;
+    int noMissedTackles = 0, lessThan3MissedTackles = 0,
+        lessThan5MissedTackles = 0, moreThan5MissedTackles = 0;
+    int noPlayerMetres = 0, lessThan10PlayerMetres = 0,
+        lessThan20PlayerMetres = 0, moreThan20PlayerMetres = 0;
     float totalWeightInRange = 0;
 
     printf("Enter the weight range (min): ");
@@ -584,23 +591,173 @@ void generateStatistics(playerDetails* top) {
 
     // Calculate percentages
     float percentNoMissedTackles = ((float)noMissedTackles / totalPlayers) * 100;
-    float percentLessThan3MissedTackles = ((float)lessThan3MissedTackles / totalPlayers) * 100;
-    float percentLessThan5MissedTackles = ((float)lessThan5MissedTackles / totalPlayers) * 100;
-    float percentMoreThan5MissedTackles = ((float)moreThan5MissedTackles / totalPlayers) * 100;
+    float percentLessThan3MissedTackles =
+        ((float)lessThan3MissedTackles / totalPlayers) * 100;
+    float percentLessThan5MissedTackles =
+        ((float)lessThan5MissedTackles / totalPlayers) * 100;
+    float percentMoreThan5MissedTackles =
+        ((float)moreThan5MissedTackles / totalPlayers) * 100;
 
     float percentNoPlayerMetres = ((float)noPlayerMetres / totalPlayers) * 100;
-    float percentLessThan10PlayerMetres = ((float)lessThan10PlayerMetres / totalPlayers) * 100;
-    float percentLessThan20PlayerMetres = ((float)lessThan20PlayerMetres / totalPlayers) * 100;
-    float percentMoreThan20PlayerMetres = ((float)moreThan20PlayerMetres / totalPlayers) * 100;
+    float percentLessThan10PlayerMetres =
+        ((float)lessThan10PlayerMetres / totalPlayers) * 100;
+    float percentLessThan20PlayerMetres =
+        ((float)lessThan20PlayerMetres / totalPlayers) * 100;
+    float percentMoreThan20PlayerMetres =
+        ((float)moreThan20PlayerMetres / totalPlayers) * 100;
+    switch (report) {
+    case 0:  // Print statistics
+        // Print statistics
+        printf("Total number of players: %d", totalPlayers);
+        printf("%% of players who miss no tackles: %.2f%%\n",
+            percentNoMissedTackles);
+        printf("%% of players who miss less than 3 tackles per match: %.2f%%\n",
+            percentLessThan3MissedTackles);
+        printf("%% of players who miss less than 5 tackles per match: %.2f%%\n",
+            percentLessThan5MissedTackles);
+        printf("%% of players who miss more than 5 tackles per match: %.2f%%\n",
+            percentMoreThan5MissedTackles);
+        printf("%% of players who make no metres in a game: %.2f%%\n",
+            percentNoPlayerMetres);
+        printf("%% of players who make less than 10 metres in a game: %.2f%%\n",
+            percentLessThan10PlayerMetres);
+        printf("%% of players who make less than 20 metres in a game: %.2f%%\n",
+            percentLessThan20PlayerMetres);
+        printf("%% of players who make more than 20 metres in a game: %.2f%%\n",
+            percentMoreThan20PlayerMetres);
+        break;
+    case 1:  // Write report to file
+        system("cls");
+        printf("Writing report to a file...\n");
+        Sleep(500);
 
-    // Print statistics
-    printf("Total number of players: %d", totalPlayers);
-    printf("%% of players who miss no tackles: %.2f%%\n", percentNoMissedTackles);
-    printf("%% of players who miss less than 3 tackles per match: %.2f%%\n", percentLessThan3MissedTackles);
-    printf("%% of players who miss less than 5 tackles per match: %.2f%%\n", percentLessThan5MissedTackles);
-    printf("%% of players who miss more than 5 tackles per match: %.2f%%\n", percentMoreThan5MissedTackles);
-    printf("%% of players who make no metres in a game: %.2f%%\n", percentNoPlayerMetres);
-    printf("%% of players who make less than 10 metres in a game: %.2f%%\n", percentLessThan10PlayerMetres);
-    printf("%% of players who make less than 20 metres in a game: %.2f%%\n", percentLessThan20PlayerMetres);
-    printf("%% of players who make more than 20 metres in a game: %.2f%%\n", percentMoreThan20PlayerMetres);
+        file = fopen("report.txt", "w");
+        if (file == NULL) {
+            printf("Error opening file!\n");
+            return;
+        }
+        // Write statistics to the report file
+        fprintf(file, "************* Player statistics *************\n");
+        fprintf(file, "Players in the range %.2f to %.2f\n", minWeight,
+            maxWeight);
+        fprintf(file, "Total number of players: %d\n", totalPlayers);
+        fprintf(file, "%% of players who miss no tackles: %.2f%%\n",
+            percentNoMissedTackles);
+        fprintf(file,
+            "%% of players who miss less than 3 tackles per match: %.2f%%\n",
+            percentLessThan3MissedTackles);
+        fprintf(file,
+            "%% of players who miss less than 5 tackles per match: %.2f%%\n",
+            percentLessThan5MissedTackles);
+        fprintf(file,
+            "%% of players who miss more than 5 tackles per match: %.2f%%\n",
+            percentMoreThan5MissedTackles);
+        fprintf(file, "%% of players who make no metres in a game: %.2f%%\n",
+            percentNoPlayerMetres);
+        fprintf(file,
+            "%% of players who make less than 10 metres in a game: %.2f%%\n",
+            percentLessThan10PlayerMetres);
+        fprintf(file,
+            "%% of players who make less than 20 metres in a game: %.2f%%\n",
+            percentLessThan20PlayerMetres);
+        fprintf(file,
+            "%% of players who make more than 20 metres in a game: %.2f%%\n",
+            percentMoreThan20PlayerMetres);
+        fprintf(file, "**********************************************\n");
+        fclose(file);
+        break;
+    default:
+        printf("Invalid Input!");
+        break;
+    }
 }
+
+void writePlayerToFile(playerDetails* top) {
+    FILE* file;
+    playerDetails* temp = top;
+
+    file = fopen("report.txt", "a");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    fprintf(file, "************* All Player Details *************\n");
+    while (temp != NULL) {
+        fprintf(file, "IRFU Number: %d\n", temp->irfuNumber);
+        fprintf(file, "First Name: %s\n", temp->firstName);
+        fprintf(file, "Second Name: %s\n", temp->secondName);
+        fprintf(file, "Age: %d\n", temp->age);
+        fprintf(file, "Height: %.2f\n", temp->height);
+        fprintf(file, "Weight: %.2f\n", temp->weight);
+        fprintf(file, "Club: %s\n", temp->club);
+        fprintf(file, "Email: %s\n", temp->email);
+        fprintf(file, "Player Position: %d\n", temp->playerPosition);
+        fprintf(file, "Missed Tackles: %d\n", temp->missedTackles);
+        fprintf(file, "Player Metres: %d\n", temp->playerMetres);
+        fprintf(file, "\n");
+        temp = temp->next;
+    }
+    fprintf(file, "**********************************************\n");
+
+    fclose(file);
+}
+
+/*
+// Function to swap two playerDetails nodes
+void swapPlayers(playerDetails* a, playerDetails* b) {
+    playerDetails temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Bubble Sort function for sorting players by height
+void bubbleSort(playerDetails* top) {
+    int swapped;
+    playerDetails* ptr1;
+    playerDetails* lptr = NULL;
+
+    if (top == NULL)
+        return;
+
+    do {
+        swapped = 0;
+        ptr1 = top;
+
+        while (ptr1->next != lptr) {
+            if (ptr1->height > ptr1->next->height) {
+                swapPlayers(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+
+// Function to list all players in order of height
+void listPlayersByHeight(playerDetails* top) {
+    // Sort players by height using Bubble Sort
+    bubbleSort(top);
+
+    // Print the sorted players
+    printf("************* Players Sorted by Height *************\n");
+    playerDetails* temp = top;
+    while (temp != NULL) {
+        printf("IRFU Number: %d\n", temp->irfuNumber);
+        printf("First Name: %s\n", temp->firstName);
+        printf("Second Name: %s\n", temp->secondName);
+        printf("Age: %d\n", temp->age);
+        printf("Height: %.2f\n", temp->height);
+        printf("Weight: %.2f\n", temp->weight);
+        printf("Club: %s\n", temp->club);
+        printf("Email: %s\n", temp->email);
+        printf("Player Position: %d\n", temp->playerPosition);
+        printf("Missed Tackles: %d\n", temp->missedTackles);
+        printf("Player Metres: %d\n", temp->playerMetres);
+        printf("\n");
+        temp = temp->next;
+    }
+    printf("**********************************************\n");
+}
+*/

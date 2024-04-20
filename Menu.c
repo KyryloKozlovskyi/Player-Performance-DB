@@ -12,7 +12,7 @@ void displayMenu() {
     printf("5) Delete player\n");
     printf("6) Generate statistics based on a range of player weights\n");
     printf("7) Print all player details into a report file\n");
-    printf("8) List all the players in order of height\n");
+    printf("8) List all the players in order of height (Not implemented)\n");
     printf("-1) Exit\n");
     printf("**********************************************\n");
 }
@@ -41,16 +41,15 @@ void processMenu(playerDetails* top) {
             deletePlayer(&top);
             break;
         case 6:
-            generateStatistics(top);
+            generateStatistics(top, 0);
             break;
         case 7:
-            printf(
-                "Print all player details into a report file function to be "
-                "implemented\n");
+            generateStatistics(top, 1);
+            writePlayerToFile(top);
             break;
         case 8:
-            printf(
-                "List all players in order of height function to be implemented\n");
+            printf("Not implemented.\n");
+            // listPlayersByHeight(top);
             break;
         case -1:
             system("cls");

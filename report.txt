@@ -1,0 +1,50 @@
+************* Player statistics *************
+Players in the range 50.00 to 200.00
+Total number of players: 3
+% of players who miss no tackles: 100.00%
+% of players who miss less than 3 tackles per match: 0.00%
+% of players who miss less than 5 tackles per match: 0.00%
+% of players who miss more than 5 tackles per match: 0.00%
+% of players who make no metres in a game: 33.33%
+% of players who make less than 10 metres in a game: 0.00%
+% of players who make less than 20 metres in a game: 0.00%
+% of players who make more than 20 metres in a game: 66.67%
+**********************************************
+************* All Player Details *************
+IRFU Number: 1
+First Name: Tadhg
+Second Name: Beirne
+Age: 28
+Height: 198.00
+Weight: 112.00
+Club: Munster
+Email: tadhbeirne@gmail.com
+Player Position: 5
+Missed Tackles: 1
+Player Metres: 4
+
+IRFU Number: 2
+First Name: Caelan
+Second Name: Doris
+Age: 22
+Height: 193.00
+Weight: 108.00
+Club: Leinster
+Email: caelandoris@gmail.com
+Player Position: 3
+Missed Tackles: 1
+Player Metres: 1
+
+IRFU Number: 3
+First Name: Finlay
+Second Name: Bealham
+Age: 29
+Height: 188.00
+Weight: 118.00
+Club: Connacht
+Email: finlaybealham@gmail.com
+Player Position: 1
+Missed Tackles: 1
+Player Metres: 4
+
+**********************************************

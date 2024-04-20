@@ -88,7 +88,7 @@ int getUserCredentials(loginDetails* top) {
             printf("*");         // Print * to the console
         }
     }
-    password[i] = '\0'; // Null to end the string (buffer)
+    password[i] = '\0';  // Null to end the string (buffer)
     printf("\n");
 
     flag = compareCredentials(username, password, top);  // Store the return value

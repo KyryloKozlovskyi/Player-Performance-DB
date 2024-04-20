@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-
 // Structure to represent player details
 typedef struct playerDetails {
 	int irfuNumber;  // Must be unique
@@ -32,11 +31,9 @@ int isIRFUnumberUnique(playerDetails* top, int irfuNumber);
 void updatePlayer(playerDetails* top);
 void deletePlayer(playerDetails** top);
 int isValidEmail(char email[99]);
-void generateStatistics(playerDetails* top);
-
-/*
-void writeReport(playerDetails* top);
-void listPlayersCategory(playerDetails* top);
-*/
+void generateStatistics(playerDetails* top, int report);
+// void listPlayersByHeight(playerDetails* top);
+// void swapPlayers(playerDetails* a, playerDetails* b);
+// void bubbleSort(playerDetails* top);
 
 #endif  // PLAYER_H
