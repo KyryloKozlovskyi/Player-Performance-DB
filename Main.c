@@ -17,7 +17,7 @@ void main() {
 
     isAuth = processLogin();  // Authenticate the user
 
-    // Debugging purposes
+    // Check if the user is authenticated
     if (isAuth == 1) {
         system("cls");
         printf("Login successful!\n");

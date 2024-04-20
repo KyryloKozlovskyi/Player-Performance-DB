@@ -10,7 +10,7 @@ typedef struct loginDetails {
 	struct loginDetails* next;
 } loginDetails;
 
-// Function declarations
+// Function prototypes
 int processLogin();
 void addElementAtStart(loginDetails** top, FILE* fp);
 int compareCredentials(char username[99], char password[7], loginDetails* top);

@@ -19,6 +19,7 @@ typedef struct playerDetails {
 	struct playerDetails* next;
 } playerDetails;
 
+// Function prototypes
 void readPlayerFile(playerDetails** top);
 void addElementAtStartP(playerDetails** top, playerDetails details);
 void addElementAtEndP(playerDetails* top, playerDetails details);
@@ -32,6 +33,8 @@ void updatePlayer(playerDetails* top);
 void deletePlayer(playerDetails** top);
 int isValidEmail(char email[99]);
 void generateStatistics(playerDetails* top, int report);
+void updatePlayerFile(playerDetails* top);
+// Unimplemented functions
 // void listPlayersByHeight(playerDetails* top);
 // void swapPlayers(playerDetails* a, playerDetails* b);
 // void bubbleSort(playerDetails* top);

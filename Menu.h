@@ -5,7 +5,7 @@
 
 #include "Player.h"
 
-// Function declarations
+// Function prototypes
 void displayMenu();
 void processMenu(playerDetails* top);
 #endif  // MENU_H

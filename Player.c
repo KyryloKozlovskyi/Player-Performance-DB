@@ -520,7 +520,7 @@ void deletePlayer(playerDetails** top) {
     }
 }
 
-// Function to generate statistics based on a range of player weights
+// Generates statistics based on a range of player weights
 void generateStatistics(playerDetails* top, int report) {
     FILE* file;
     float minWeight, maxWeight;
@@ -701,6 +701,32 @@ void writePlayerToFile(playerDetails* top) {
     fprintf(file, "**********************************************\n");
 
     fclose(file);
+}
+
+// Update the player file with the new details from the linked list
+void updatePlayerFile(playerDetails* top) {
+    FILE* fp;
+    fp = fopen("Rugby.txt", "w");
+
+    if (fp == NULL) {
+        printf("Error opening file for writing!\n");
+        return;
+    }
+
+    playerDetails* temp = top;
+
+    while (temp != NULL) {
+        fprintf(fp, "%d %s %s %d %.2f %.2f %s %s %d %d %d\n",
+            temp->irfuNumber, temp->firstName, temp->secondName,
+            temp->age, temp->height, temp->weight, temp->club,
+            temp->email, temp->playerPosition, temp->missedTackles,
+            temp->playerMetres);
+
+        temp = temp->next;
+    }
+
+    fclose(fp);
+    printf("Rugby.txt file updated successfully!\n");
 }
 
 /*

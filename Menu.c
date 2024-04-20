@@ -4,6 +4,7 @@
 #include "Player.h"
 
 void displayMenu() {
+    // Menu options
     printf("******************** Menu ********************\n");
     printf("1) Add player\n");
     printf("2) Display all players to screen\n");
@@ -17,6 +18,7 @@ void displayMenu() {
     printf("**********************************************\n");
 }
 
+// Run the menu
 void processMenu(playerDetails* top) {
     int choice;
     do {
@@ -52,6 +54,9 @@ void processMenu(playerDetails* top) {
             // listPlayersByHeight(top);
             break;
         case -1:
+            printf("Updating player file...\n");
+            Sleep(500);
+            updatePlayerFile(top);
             system("cls");
             printf("Exiting...\n");
             Sleep(500);
