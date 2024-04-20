@@ -230,8 +230,7 @@ void addPlayer(playerDetails** top) {
 
     // Check if the IRFU number is unique
     if (!isIRFUnumberUnique(*top, temp.irfuNumber)) {
-        printf(
-            "IRFU Number is not unique! Please enter a different IRFU Number.\n");
+        printf("IRFU Number is not unique! Please enter a different IRFU Number.\n");
         return;
     }
 
@@ -291,29 +290,35 @@ void addPlayer(playerDetails** top) {
         return;
     }
 
-    printf("Enter Player Position: ");
-    if (scanf("%d", &temp.playerPosition) != 1) {
-        printf("Invalid input! Please enter a valid Player Position.\n");
-        while (getchar() != '\n')
-            ;  // Clear the input buffer
-        return;
-    }
+    do {
+        displayPlayerPositions();
+        printf("Enter Player Position (1-7): ");
+        if (scanf("%d", &temp.playerPosition) != 1 || temp.playerPosition < 1 || temp.playerPosition > 7) {
+            printf("Invalid input! Please enter a valid Player Position (1-7).\n");
+            while (getchar() != '\n')
+                ;  // Clear the input buffer
+        }
+    } while (temp.playerPosition < 1 || temp.playerPosition > 7);
 
-    printf("Enter Missed Tackles: ");
-    if (scanf("%d", &temp.missedTackles) != 1) {
-        printf("Invalid input! Please enter valid Missed Tackles.\n");
-        while (getchar() != '\n')
-            ;  // Clear the input buffer
-        return;
-    }
+    do {
+        displayMissedTackles();
+        printf("Enter Missed Tackles (1-4): ");
+        if (scanf("%d", &temp.missedTackles) != 1 || temp.missedTackles < 1 || temp.missedTackles > 4) {
+            printf("Invalid input! Please enter valid Missed Tackles (1-4).\n");
+            while (getchar() != '\n')
+                ;  // Clear the input buffer
+        }
+    } while (temp.missedTackles < 1 || temp.missedTackles > 4);
 
-    printf("Enter Player Metres: ");
-    if (scanf("%d", &temp.playerMetres) != 1) {
-        printf("Invalid input! Please enter valid Player Metres.\n");
-        while (getchar() != '\n')
-            ;  // Clear the input buffer
-        return;
-    }
+    do {
+        displayPlayerMetres();
+        printf("Enter Player Metres (1-4): ");
+        if (scanf("%d", &temp.playerMetres) != 1 || temp.playerMetres < 1 || temp.playerMetres > 4) {
+            printf("Invalid input! Please enter valid Player Metres (1-4).\n");
+            while (getchar() != '\n')
+                ;  // Clear the input buffer
+        }
+    } while (temp.playerMetres < 1 || temp.playerMetres > 4);
 
     // Add the player to the linked list check if the linked list is empty
     if (*top == NULL) {
@@ -323,6 +328,7 @@ void addPlayer(playerDetails** top) {
         addElementAtEndP(*top, temp);
     }
 }
+
 
 // Print all player details from the linked list
 void displayAllPlayers(playerDetails* top) {
@@ -727,6 +733,36 @@ void updatePlayerFile(playerDetails* top) {
 
     fclose(fp);
     printf("Rugby.txt file updated successfully!\n");
+}
+
+// Function to display player positions (Output)
+void displayPlayerPositions() {
+    printf("Player Positions:\n");
+    printf("1. Prop\n");
+    printf("2. Hooker\n");
+    printf("3. Second Row\n");
+    printf("4. Back Row\n");
+    printf("5. Half Back\n");
+    printf("6. Centres\n");
+    printf("7. Wingers/Full Back\n");
+}
+
+// Function to display player metres (Output)
+void displayPlayerMetres() {
+    printf("How many metres does the player make in a game?\n");
+    printf("1. None\n");
+    printf("2. Less than 10 metres\n");
+    printf("3. Less than 20 metres\n");
+    printf("4. More than 20 metres\n");
+}
+
+// Function to display missed tackles (Output)
+void displayMissedTackles() {
+	printf("How many tackles does the player miss per match?\n");
+	printf("1. None\n");
+	printf("2. Less than 3 tackles\n");
+	printf("3. Less than 5 tackles\n");
+	printf("4. More than 5 tackles\n");
 }
 
 /*
