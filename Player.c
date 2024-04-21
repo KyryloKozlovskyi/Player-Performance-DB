@@ -8,7 +8,6 @@
 
 #include "Player.h"
 
-// Read the player file and store the details in a linked list
 void readPlayerFile(playerDetails** top) {
     printf("Initializing DB...\n");
     Sleep(500);
@@ -23,19 +22,24 @@ void readPlayerFile(playerDetails** top) {
     }
     else {
         // Read the file and store the player details in the linked list
-        while (!feof(fp)) {
+        while (1) {
             playerDetails temp;
-            fscanf(fp, "%d %s %s %d %f %f %s %s %d %d %d", &temp.irfuNumber,
-                temp.firstName, temp.secondName, &temp.age, &temp.height,
-                &temp.weight, temp.club, temp.email, &temp.playerPosition,
-                &temp.missedTackles, &temp.playerMetres);
+            int result =
+                fscanf(fp, "%d %s %s %d %f %f %s %s %d %d %d", &temp.irfuNumber,
+                    temp.firstName, temp.secondName, &temp.age, &temp.height,
+                    &temp.weight, temp.club, temp.email, &temp.playerPosition,
+                    &temp.missedTackles, &temp.playerMetres);
 
-            // Add the player to the linked list check if the linked list is empty
+            // Check if reading was successful
+            if (result == EOF) {
+                break;  // End of file reached
+            }
+
+            // Add the player to the linked list
             if (*top == NULL) {
                 addElementAtStartP(
                     top,
                     temp);  // If the linked list is empty, add the player at the start
-
             }
             else {
                 addElementAtEndP(*top, temp);  // If the linked list is not empty, add
@@ -102,6 +106,11 @@ playerDetails* searchByName(playerDetails* top) {
         if (strcmp(firstName, temp->firstName) == 0 &&
             strcmp(secondName, temp->secondName) == 0) {
             system("cls");
+            printf("**********************************************\n");
+            displayPlayerPositions();
+            displayMissedTackles();
+            displayPlayerMetres();
+            printf("**********************************************\n");
             printf("Player Details:\n");
             printf("IRFU Number: %d\n", temp->irfuNumber);
             printf("First Name: %s\n", temp->firstName);
@@ -147,6 +156,11 @@ playerDetails* searchByIRFU(playerDetails* top) {
     while (temp != NULL) {
         if (irfuNumber == temp->irfuNumber) {
             system("cls");
+            printf("**********************************************\n");
+            displayPlayerPositions();
+            displayMissedTackles();
+            displayPlayerMetres();
+            printf("**********************************************\n");
             printf("Player Details:\n");
             printf("IRFU Number: %d\n", temp->irfuNumber);
             printf("First Name: %s\n", temp->firstName);
@@ -230,7 +244,8 @@ void addPlayer(playerDetails** top) {
 
     // Check if the IRFU number is unique
     if (!isIRFUnumberUnique(*top, temp.irfuNumber)) {
-        printf("IRFU Number is not unique! Please enter a different IRFU Number.\n");
+        printf(
+            "IRFU Number is not unique! Please enter a different IRFU Number.\n");
         return;
     }
 
@@ -293,7 +308,8 @@ void addPlayer(playerDetails** top) {
     do {
         displayPlayerPositions();
         printf("Enter Player Position (1-7): ");
-        if (scanf("%d", &temp.playerPosition) != 1 || temp.playerPosition < 1 || temp.playerPosition > 7) {
+        if (scanf("%d", &temp.playerPosition) != 1 || temp.playerPosition < 1 ||
+            temp.playerPosition > 7) {
             printf("Invalid input! Please enter a valid Player Position (1-7).\n");
             while (getchar() != '\n')
                 ;  // Clear the input buffer
@@ -303,7 +319,8 @@ void addPlayer(playerDetails** top) {
     do {
         displayMissedTackles();
         printf("Enter Missed Tackles (1-4): ");
-        if (scanf("%d", &temp.missedTackles) != 1 || temp.missedTackles < 1 || temp.missedTackles > 4) {
+        if (scanf("%d", &temp.missedTackles) != 1 || temp.missedTackles < 1 ||
+            temp.missedTackles > 4) {
             printf("Invalid input! Please enter valid Missed Tackles (1-4).\n");
             while (getchar() != '\n')
                 ;  // Clear the input buffer
@@ -313,7 +330,8 @@ void addPlayer(playerDetails** top) {
     do {
         displayPlayerMetres();
         printf("Enter Player Metres (1-4): ");
-        if (scanf("%d", &temp.playerMetres) != 1 || temp.playerMetres < 1 || temp.playerMetres > 4) {
+        if (scanf("%d", &temp.playerMetres) != 1 || temp.playerMetres < 1 ||
+            temp.playerMetres > 4) {
             printf("Invalid input! Please enter valid Player Metres (1-4).\n");
             while (getchar() != '\n')
                 ;  // Clear the input buffer
@@ -329,11 +347,15 @@ void addPlayer(playerDetails** top) {
     }
 }
 
-
 // Print all player details from the linked list
 void displayAllPlayers(playerDetails* top) {
     system("cls");
     playerDetails* temp = top;
+    printf("**********************************************\n");
+    displayPlayerPositions();
+    displayMissedTackles();
+    displayPlayerMetres();
+    printf("**********************************************\n");
     printf("************* All Player Details *************\n");
     // Iterate over the linked list and print the details of each player
     while (temp != NULL) {
@@ -678,6 +700,7 @@ void generateStatistics(playerDetails* top, int report) {
     }
 }
 
+// Write all player details to a report file
 void writePlayerToFile(playerDetails* top) {
     FILE* file;
     playerDetails* temp = top;
@@ -722,11 +745,10 @@ void updatePlayerFile(playerDetails* top) {
     playerDetails* temp = top;
 
     while (temp != NULL) {
-        fprintf(fp, "%d %s %s %d %.2f %.2f %s %s %d %d %d\n",
-            temp->irfuNumber, temp->firstName, temp->secondName,
-            temp->age, temp->height, temp->weight, temp->club,
-            temp->email, temp->playerPosition, temp->missedTackles,
-            temp->playerMetres);
+        fprintf(fp, "%d %s %s %d %.2f %.2f %s %s %d %d %d\n", temp->irfuNumber,
+            temp->firstName, temp->secondName, temp->age, temp->height,
+            temp->weight, temp->club, temp->email, temp->playerPosition,
+            temp->missedTackles, temp->playerMetres);
 
         temp = temp->next;
     }
@@ -758,11 +780,11 @@ void displayPlayerMetres() {
 
 // Function to display missed tackles (Output)
 void displayMissedTackles() {
-	printf("How many tackles does the player miss per match?\n");
-	printf("1. None\n");
-	printf("2. Less than 3 tackles\n");
-	printf("3. Less than 5 tackles\n");
-	printf("4. More than 5 tackles\n");
+    printf("How many tackles does the player miss per match?\n");
+    printf("1. None\n");
+    printf("2. Less than 3 tackles\n");
+    printf("3. Less than 5 tackles\n");
+    printf("4. More than 5 tackles\n");
 }
 
 /*
